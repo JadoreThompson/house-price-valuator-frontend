@@ -4,6 +4,7 @@ import { useState, type FC } from "react";
 interface FilterCategorySliderProps {
   label: string;
   defaultValue: number; // Default value for slider
+  onChange?: (value: number) => void; // Optional callback for value change
   name: string; // Value to be used as name property on the input
   min?: number;
   max?: number;
@@ -13,6 +14,7 @@ interface FilterCategorySliderProps {
 const FilterCategorySlider: FC<FilterCategorySliderProps> = ({
   label,
   defaultValue,
+  onChange = () => {},
   name,
   min = 0,
   max = 100,
@@ -51,14 +53,21 @@ const FilterCategorySlider: FC<FilterCategorySliderProps> = ({
           step={step}
           className="w-16 rounded-md border-2 border-black text-right"
           value={inputValue}
-          onChange={handleInputChange}
+          onChange={(e) => {
+            const value = Number(e.currentTarget.value);
+            handleInputChange(e);
+            onChange(value);
+          }}
         />
       </div>
       <div className="flex-1">
         <Slider
           className="h-full"
           value={[bedrooms]}
-          onValueChange={handleSliderChange}
+          onValueChange={(e) => {
+            handleSliderChange(e);
+            onChange(e[0]);
+          }}
           min={min}
           max={max}
           step={step}

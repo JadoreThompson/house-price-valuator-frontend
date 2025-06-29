@@ -1,6 +1,5 @@
 export class UtilsManager {
   static BASE_URL: string = import.meta.env.VITE_BASE_URL;
-  static TX_PREFIX: string = import.meta.env.VITE_TXN_PREFIX;
 
   static toCamelCase(value: string): string {
     let delimitter: string = "";
@@ -10,7 +9,7 @@ export class UtilsManager {
     } else if (value.includes("-")) {
       delimitter = "-";
     } else {
-      return value;
+      return value.charAt(0).toUpperCase() + value.slice(1);
     }
 
     return value
